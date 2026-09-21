@@ -21,10 +21,18 @@ sleep $DELAY
 echo "» تأخیر تموم شد. در حال استارت Social..."
 echo ""
 
+# ========== مدیریت UUID ==========
 if [ -n "$EARNAPP_UUID" ]; then
+    # اگه از بیرون UUID دادی، همون رو استفاده کن
     echo "$EARNAPP_UUID" > /etc/earnapp/uuid
+    echo "» استفاده از UUID داده‌شده"
+else
+    # اگه UUID ندادی، فایل قبلی رو پاک کن تا جدید بسازه
+    rm -f /etc/earnapp/uuid
+    echo "» ساخت UUID جدید..."
 fi
 
+# استارت EarnApp
 earnapp start >/dev/null 2>&1 &
 
 echo -n "Starting Social"
