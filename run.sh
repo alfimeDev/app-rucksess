@@ -23,13 +23,14 @@ echo ""
 
 # ========== مدیریت UUID ==========
 if [ -n "$EARNAPP_UUID" ]; then
-    # اگه از بیرون UUID دادی، همون رو استفاده کن
+    # اگه از بیرون UUID دادی
     echo "$EARNAPP_UUID" > /etc/earnapp/uuid
     echo "» استفاده از UUID داده‌شده"
 else
-    # اگه UUID ندادی، فایل قبلی رو پاک کن تا جدید بسازه
-    rm -f /etc/earnapp/uuid
-    echo "» ساخت UUID جدید..."
+    # ساخت UUID جدید با فرمت صحیح
+    NEW_UUID="sdk-node-$(cat /proc/sys/kernel/random/uuid | tr -d '-')"
+    echo "$NEW_UUID" > /etc/earnapp/uuid
+    echo "» ساخت UUID جدید: $NEW_UUID"
 fi
 
 # استارت EarnApp
